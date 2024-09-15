@@ -16,7 +16,9 @@ export class CreateJobDto {
 	areaType: AreaType;
 	@ApiProperty({ enum: SeniorityLevel })
 	seniorityLevel: SeniorityLevel;
+	@ApiProperty()
+	annualSalary: number;
 
-	@ApiProperty({ default: [] })
-	tags: string[];
+	// @ApiProperty({ default: [] })
+	// tags: string[];
 }

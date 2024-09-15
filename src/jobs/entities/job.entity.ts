@@ -1,3 +1,5 @@
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
 export enum JobType {
 	FULLTIME = 'FullTime',
 	HYBRID = 'Hybrid',
@@ -19,14 +21,27 @@ export enum SeniorityLevel {
 	LEAD = 'Lead',
 }
 
+@Entity()
 export class Job {
+	@PrimaryGeneratedColumn()
 	id: number;
+	@Column()
 	title: string;
+	@Column()
 	shortDescription: string;
+	@Column()
 	description: string;
 
+	@Column()
 	jobType: JobType;
+	@Column()
 	areaType: AreaType;
+	@Column()
 	seniorityLevel: SeniorityLevel;
-	tags: string[];
+	@Column()
+	annualSalary: number;
+	@CreateDateColumn()
+	createdAt: Date;
+	// @Column({ array: true })
+	// tags: string[];
 }

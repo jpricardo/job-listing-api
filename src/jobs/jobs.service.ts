@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
@@ -6,32 +8,28 @@ import { Job } from './entities/job.entity';
 
 @Injectable()
 export class JobsService {
-	private jobList: Job[] = [];
+	constructor(
+		@InjectRepository(Job)
+		private usersRepository: Repository<Job>,
+	) {}
 
-	create(createJobDto: CreateJobDto) {
-		const id = this.jobList.length + 1;
-		this.jobList.push({ id, ...createJobDto });
-
-		return id;
+	async create(createJobDto: CreateJobDto) {
+		return this.usersRepository.save(createJobDto);
 	}
 
-	findAll() {
-		return this.jobList;
+	async findAll() {
+		return await this.usersRepository.find();
 	}
 
-	findOne(id: number) {
-		return this.jobList.find((job) => job.id === id);
+	async findOne(id: number) {
+		return await this.usersRepository.findOneBy({ id });
 	}
 
-	update(id: number, updateJobDto: UpdateJobDto) {
-		const targetJob = this.jobList.find((job) => job.id === id);
-		Object.assign(targetJob, updateJobDto);
-
-		return targetJob;
+	async update(id: number, updateJobDto: UpdateJobDto) {
+		return await this.usersRepository.update(id, updateJobDto);
 	}
 
-	remove(id: number) {
-		this.jobList.filter((job) => job.id !== id);
-		return;
+	async remove(id: number) {
+		return await this.usersRepository.delete(id);
 	}
 }
