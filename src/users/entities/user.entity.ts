@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { hashSync } from 'bcrypt';
 import { Column, Entity, PrimaryGeneratedColumn, ValueTransformer } from 'typeorm';
 
+import { Role } from '../../lib/enums/role.enum';
+
 const passwordTransformer: ValueTransformer = {
 	// We probablye should use more salt rounds on a real app, but it would be overkill on this one
 	// Hash it before writing to the Database
@@ -27,4 +29,8 @@ export class User {
 	@Column({ default: true })
 	@ApiProperty({ readOnly: true })
 	isActive: boolean;
+
+	@Column({ enum: Role })
+	@ApiProperty({ enum: Role })
+	role: Role;
 }

@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { Role } from '../lib/enums/role.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-	private readonly users: User[] = [{ id: 1, username: 'maria', password: 'maria', isActive: true }];
+	private readonly users: User[] = [{ id: 1, username: 'maria', password: 'maria', isActive: true, role: Role.USER }];
 
 	private async initializeDb() {
 		// Just for development, don't learn from this

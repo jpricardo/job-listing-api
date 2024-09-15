@@ -1,26 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-export enum JobType {
-	FULLTIME = 'FullTime',
-	HYBRID = 'Hybrid',
-	REMOTE = 'Remote',
-}
-
-export enum AreaType {
-	DEVELOPMENT = 'Development',
-	DESIGN = 'Design',
-	DEVOPS = 'DevOps',
-	QA = 'QA',
-	MANAGEMENT = 'Management',
-}
-
-export enum SeniorityLevel {
-	JUNIOR = 'Junior',
-	ASSOCIATE = 'Associate',
-	SENIOR = 'Senior',
-	LEAD = 'Lead',
-}
+import { AreaType } from '../../lib/enums/area-type.enum';
+import { JobType } from '../../lib/enums/job-type.enum';
+import { SeniorityLevel } from '../../lib/enums/seniority-level.enum';
 
 @Entity()
 export class Job {
@@ -40,15 +23,15 @@ export class Job {
 	@ApiProperty({ default: '' })
 	description: string;
 
-	@Column()
+	@Column({ enum: JobType })
 	@ApiProperty({ enum: JobType })
 	jobType: JobType;
 
-	@Column()
+	@Column({ enum: AreaType })
 	@ApiProperty({ enum: AreaType })
 	areaType: AreaType;
 
-	@Column()
+	@Column({ enum: SeniorityLevel })
 	@ApiProperty({ enum: SeniorityLevel })
 	seniorityLevel: SeniorityLevel;
 

@@ -2,6 +2,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../lib/decorators/roles.decorator';
+import { Role } from '../lib/enums/role.enum';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 import { Job } from './entities/job.entity';
@@ -10,7 +13,7 @@ import { JobsService } from './jobs.service';
 @ApiTags('jobs')
 @ApiBearerAuth()
 @Controller('jobs')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class JobsController {
 	constructor(private readonly jobsService: JobsService) {}
 
@@ -38,6 +41,7 @@ export class JobsController {
 	}
 
 	@Delete(':id')
+	@Roles(Role.ADMIN)
 	remove(@Param('id') id: number) {
 		return this.jobsService.remove(id);
 	}
