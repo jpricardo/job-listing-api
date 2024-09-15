@@ -10,6 +10,8 @@ async function bootstrap() {
 		.setTitle('Job Listing')
 		.setDescription('Job Listing REST API')
 		.setVersion('1.0')
+		.addBasicAuth()
+		.addBearerAuth()
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
